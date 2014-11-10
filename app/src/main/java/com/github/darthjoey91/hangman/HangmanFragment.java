@@ -92,6 +92,7 @@ public class HangmanFragment extends Fragment {
                 }else{
                     mTheWord.setText(mTheWordDashes);
                     mInput.setText("");
+                    endGame();
                 }}
 
 
@@ -179,6 +180,15 @@ public class HangmanFragment extends Fragment {
         else{
             mTheWord.setText(mWord);
             mWrongGuesses.setText(R.string.game_over);
+            mGallows.setImageResource(R.drawable.error6);
+        }
+    }
+
+    public void endGame(){
+        if(mWord.equals(mTheWordDashes))
+        {
+            mWrongGuesses.setText(R.string.game_over);
+            mTheWord.setText(R.string.game_win);
         }
     }
 
