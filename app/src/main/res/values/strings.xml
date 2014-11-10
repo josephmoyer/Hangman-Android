@@ -4,7 +4,7 @@
     <string name="app_name">Hangman</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-    <string name="hint">Click to submit.</string>
+    <string name="hint">Click the blanks to submit.</string>
     <string name="test_error">Only one letter.</string>
     <string name="empty_error">You forgot a letter.</string>
     <string name="game_over">Game Over</string>
