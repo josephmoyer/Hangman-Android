@@ -28,4 +28,4 @@ You lose when the hangman has a full body.
 * Clone repo using `git clone https://github.com/darthjoey91/Hangman-Android.git`
 * `cd Hangman-Android`
 * `./gradlew assembleRelease`
-* Apk is then found in `./app/build/outputs/apk
+* Apk is then found in `./app/build/outputs/apk`
