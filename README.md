@@ -29,3 +29,11 @@ You lose when the hangman has a full body.
 * `cd Hangman-Android`
 * `./gradlew assembleRelease`
 * Apk is then found in `./app/build/outputs/apk`
+
+
+###Build Instructions for Windows
+* Clone repo either using git bash or Github for Windows.
+* Find the repository that you cloned.
+* Run `gradlew.bat assembleRelease` from the command line.
+
+Building requires Android SDK.
