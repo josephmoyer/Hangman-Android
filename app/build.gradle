@@ -1,6 +1,6 @@
 buildscript {
     repositories {
-        maven { url 'http://repo1.maven.org/maven2' }
+        mavenCentral()
     }
 }
 apply plugin: 'com.android.application'
@@ -17,8 +17,8 @@ android {
         applicationId "com.github.darthjoey91.hangman"
         minSdkVersion 15
         targetSdkVersion 21
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "0.2-alpha"
     }
     buildTypes {
         release {
