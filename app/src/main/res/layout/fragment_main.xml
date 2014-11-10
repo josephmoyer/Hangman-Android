@@ -15,7 +15,7 @@
         android:id="@+id/gallows"
         android:layout_gravity="top"
         android:src="@drawable/error0"
-        android:adjustViewBounds="true"
+        android:adjustViewBounds="false"
         android:layout_weight="75"/>
     <TextView
         android:layout_width="fill_parent"

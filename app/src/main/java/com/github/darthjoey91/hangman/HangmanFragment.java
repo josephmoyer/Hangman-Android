@@ -82,8 +82,8 @@ public class HangmanFragment extends Fragment {
                 if(mGuess!='\u0000'){
                 String temp =mTheWordDashes;
                 mTheWordDashes=findCharInWord(mWord,mGuess,mTheWordDashes);
-                if(mTheWordDashes==temp){
-                    if(mWrongGuessesData==""){
+                if(mTheWordDashes.equals(temp)){
+                    if(mWrongGuessesData.equals("")){
                         mWrongGuessesData=mWrongGuessesData+String.valueOf(mGuess);
                     }else {
                         mWrongGuessesData = mWrongGuessesData + ", " + String.valueOf(mGuess);
@@ -135,7 +135,12 @@ public class HangmanFragment extends Fragment {
         Random random = new Random();
         int index = random.nextInt(length);
         String word = list.get(index);
-        return word;
+        String temp="";
+        // add spaces in between letter to make it look pretty
+        for(int i=0; i<word.length();i++){
+            temp=temp+word.charAt(i)+" ";
+        }
+        return temp;
     }
 
     public String findCharInWord(String word, char letter, String returnable) {
@@ -143,7 +148,7 @@ public class HangmanFragment extends Fragment {
             for (int index =0; index < word.length();index++) {
                 if (word.charAt(index) == letter) {
                     char[] temp = returnable.toCharArray();
-                    temp[2*index] = letter;
+                    temp[index] = letter;
                     returnable = String.valueOf(temp);
                 }
             }
@@ -153,7 +158,10 @@ public class HangmanFragment extends Fragment {
     public String hideWord(String word){
         String dashes="";
         for(int i=0;i<word.length();i++){
-                dashes=dashes+"_ ";
+            if(word.charAt(i)==' '||word.charAt(i)=='\'')
+                dashes=dashes+word.charAt(i);
+            else
+                dashes=dashes+"_";
         }
         return dashes;
     }
@@ -161,14 +169,17 @@ public class HangmanFragment extends Fragment {
     private void increaseError(){
         mWrongGuesses.setText(mWrongGuessesData);
         error+=1;
-        if(error<7){
+        if(error<6){
             String id = "error"+String.valueOf(error);
             mGallows.setImageResource(getResources().getIdentifier(id,"drawable","com.github.darthjoey91.hangman"));
             mInput.setText("");
             mTheWord.setText(mTheWordDashes);
             mInput.requestFocus();
         }
-        else{mTheWord.setText(mWord);}
+        else{
+            mTheWord.setText(mWord);
+            mWrongGuesses.setText(R.string.game_over);
+        }
     }
 
 }

@@ -7,5 +7,6 @@
     <string name="hint">Click to submit.</string>
     <string name="test_error">Only one letter.</string>
     <string name="empty_error">You forgot a letter.</string>
+    <string name="game_over">Game Over</string>
 
 </resources>
