@@ -18,8 +18,14 @@ You lose when the hangman has a full body.
 
 
 
-#TO-DO List:
+###TO-DO List:
 
 * Add difficulty on word lists.
 * Allow for use of custom word lists.
 * Add support for Spanish
+
+###Build Instructions for Linux in Terminal
+* Clone repo using `git clone https://github.com/darthjoey91/Hangman-Android.git`
+* `cd Hangman-Android`
+* `./gradlew assembleRelease`
+* Apk is then found in `./app/build/outputs/apk
