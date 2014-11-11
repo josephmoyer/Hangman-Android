@@ -2,6 +2,7 @@ package com.github.darthjoey91.hangman;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +12,14 @@ import android.widget.TextView;
 
 import com.andreabaccega.widget.FormEditText;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 /**
  * Created by Joseph Moyer on 11/6/14.
- * 
+ *
  */
 public class HangmanFragment extends Fragment {
     //Declaring variables
@@ -31,6 +33,7 @@ public class HangmanFragment extends Fragment {
     private String mWrongGuessesData;
     private String mTheWordDashes;
     private int error;
+    private String LOG_TAG = "HangmanFragment";
 
     private void resetGame(){
         mInput.requestFocus();
@@ -52,22 +55,12 @@ public class HangmanFragment extends Fragment {
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        mWordList = new ArrayList<String>();
 
-        //Filling mWordList
-        Scanner listScanner = new Scanner(getResources().openRawResource(R.raw.wordlist));
 
-        try {
-            while (listScanner.hasNext()) {
-                mWordList.add(listScanner.next());
-            }
-        } catch (Exception e){
-            Log.e("Didn't create wordlist.", e.getMessage());
-        } finally {
-            listScanner.close();
-        }
+
 
         //Initialize game
+        fillWordList();
         mGallows = (ImageView) rootView.findViewById(R.id.gallows);
         mWrongGuesses = (TextView) rootView.findViewById(R.id.wrongletters);
         mInput = (FormEditText) rootView.findViewById(R.id.input);
@@ -109,7 +102,6 @@ public class HangmanFragment extends Fragment {
                 }
             }
         });
-
 
 
 
@@ -199,6 +191,63 @@ public class HangmanFragment extends Fragment {
             mWrongGuesses.setText(R.string.game_over);
             mGallows.setImageResource(R.drawable.error6);
         }
+    }
+
+    public void fillWordList(){
+
+        mWordList = new ArrayList<String>();
+        Scanner listScanner;
+
+
+        //Filling mWordList
+        if(isExternalStorageReadable()){
+            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+            File file = new File(path, "wordlist.dat");
+
+            try {
+                path.mkdirs();
+                if(file.canRead()){
+                    listScanner = new Scanner(file);
+                    try {
+                        while (listScanner.hasNext()) {
+                            mWordList.add(listScanner.next());
+                        }
+                    } catch (Exception e){
+                        Log.e(LOG_TAG, e.getMessage());
+                    } finally {
+                        listScanner.close();
+                    }
+
+                }
+
+            }catch (Exception e){
+                Log.e(LOG_TAG,e.getMessage());
+            }
+        }else{
+            listScanner = new Scanner(getResources().openRawResource(R.raw.wordlist));
+
+
+            try {
+                while (listScanner.hasNext()) {
+                    mWordList.add(listScanner.next());
+                }
+            } catch (Exception e){
+                Log.e(LOG_TAG, e.getMessage());
+            } finally {
+                listScanner.close();
+            }
+        }
+
+
+    }
+
+    public boolean isExternalStorageReadable() {
+        String state = Environment.getExternalStorageState();
+        if (Environment.MEDIA_MOUNTED.equals(state) ||
+                Environment.MEDIA_MOUNTED_READ_ONLY.equals(state)) {
+            return true;
+        }
+        return false;
     }
 
 }
