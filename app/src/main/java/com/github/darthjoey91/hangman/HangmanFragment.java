@@ -74,30 +74,38 @@ public class HangmanFragment extends Fragment {
         resetGame();
 
 
+        //Main Flow of Game
 
+        //Listener listens for a click.
         mTheWord.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Takes inputted letter.
                 mGuess=getLetter(mInput);
-                if(mGuess!='\u0000'){
-                String temp =mTheWordDashes;
-                mTheWordDashes=findCharInWord(mWord,mGuess,mTheWordDashes);
-                if(mTheWordDashes.equals(temp)){
-                    if(mWrongGuessesData.equals("")){
-                        mWrongGuessesData=mWrongGuessesData+String.valueOf(mGuess);
-                    }else {
-                        mWrongGuessesData = mWrongGuessesData + ", " + String.valueOf(mGuess);
+                //Provided good input
+                if(mGuess!='\u0000') {
+                    //Find every instance of letter
+                    String temp = mTheWordDashes;
+                    mTheWordDashes = findCharInWord(mWord, mGuess, mTheWordDashes);
+                    //If letter is not in word
+                    if (mTheWordDashes.equals(temp)) {
+                        //Add letter to list of wrong letters appropriately
+                        if (mWrongGuessesData.equals("")) {
+                            mWrongGuessesData = mWrongGuessesData + String.valueOf(mGuess);
+                        } else {
+                            mWrongGuessesData = mWrongGuessesData + ", " + String.valueOf(mGuess);
+                        }
+                        mWrongGuesses.setText(mWrongGuessesData);
+                        //Then add new stuff to hangman
+                        increaseError();
+                    } else {
+                        //Reset the input and show that the letter was right.
+                        mTheWord.setText(mTheWordDashes);
+                        mInput.setText("");
                     }
-                    increaseError();
-                }else{
-                    mTheWord.setText(mTheWordDashes);
-                    mInput.setText("");
+                    mInput.requestFocus();
                     endGame();
-                }}
-
-
-
-
+                }
             }
         });
 
@@ -168,19 +176,14 @@ public class HangmanFragment extends Fragment {
     }
 
     private void increaseError(){
-        mWrongGuesses.setText(mWrongGuessesData);
+
+
         error+=1;
         if(error<6){
             String id = "error"+String.valueOf(error);
             mGallows.setImageResource(getResources().getIdentifier(id,"drawable","com.github.darthjoey91.hangman"));
             mInput.setText("");
             mTheWord.setText(mTheWordDashes);
-            mInput.requestFocus();
-        }
-        else{
-            mTheWord.setText(mWord);
-            mWrongGuesses.setText(R.string.game_over);
-            mGallows.setImageResource(R.drawable.error6);
         }
     }
 
@@ -189,6 +192,11 @@ public class HangmanFragment extends Fragment {
         {
             mWrongGuesses.setText(R.string.game_over);
             mTheWord.setText(R.string.game_win);
+            mGallows.setImageResource(R.drawable.win);
+        }else if (error>=6){
+            mTheWord.setText(mWord);
+            mWrongGuesses.setText(R.string.game_over);
+            mGallows.setImageResource(R.drawable.error6);
         }
     }
 
