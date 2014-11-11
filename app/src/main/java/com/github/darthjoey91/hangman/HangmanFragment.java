@@ -16,7 +16,8 @@ import java.util.Random;
 import java.util.Scanner;
 
 /**
- * Created by joe on 11/6/14.
+ * Created by Joseph Moyer on 11/6/14.
+ * 
  */
 public class HangmanFragment extends Fragment {
     //Declaring variables
