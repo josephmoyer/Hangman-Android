@@ -138,6 +138,7 @@ public class HangmanFragment extends Fragment {
         Random random = new Random();
         int index = random.nextInt(length);
         String word = list.get(index);
+        word = word.toLowerCase();
         String temp = "";
         // add spaces in between letter to make it look pretty
         for (int i = 0; i < word.length(); i++) {
@@ -161,7 +162,7 @@ public class HangmanFragment extends Fragment {
     public String hideWord(String word){
         String dashes="";
         for(int i=0;i<word.length();i++){
-            if(word.charAt(i)==' '||word.charAt(i)=='\'')
+            if(!isLowercaseCharacter(word.charAt(i)))
                 dashes=dashes+word.charAt(i);
             else
                 dashes=dashes+"_";
@@ -258,6 +259,11 @@ public class HangmanFragment extends Fragment {
         } finally {
             listScanner.close();
         }
+    }
+
+    public boolean isLowercaseCharacter(char a){
+        String test = String.valueOf(a);
+        return test.matches("\\p{Ll}"); //Using Ll because I'd like to support non-English words eventually.
     }
 
 }

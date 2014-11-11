@@ -37,7 +37,7 @@
             android:layout_gravity="left"
             android:gravity="center"
             hangman:testType="regexp"
-            hangman:customRegexp="^[a-zA-Z]$"
+            hangman:customRegexp="^\\p{Ll}$"
             hangman:testErrorString="@string/test_error"
             hangman:emptyErrorString="@string/empty_error"
             android:layout_weight="50"
