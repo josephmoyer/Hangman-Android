@@ -43,6 +43,7 @@
             android:layout_weight="50"
             android:focusable="true"
             android:capitalize="none"
+            android:inputType="textNoSuggestions"
             />
         <TextView
             android:text="Testing"

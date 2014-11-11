@@ -34,6 +34,7 @@ public class HangmanFragment extends Fragment {
     private String mTheWordDashes;
     private int error;
     private String LOG_TAG = "HangmanFragment";
+    private Scanner listScanner;
 
     private void resetGame(){
         mInput.requestFocus();
@@ -137,10 +138,10 @@ public class HangmanFragment extends Fragment {
         Random random = new Random();
         int index = random.nextInt(length);
         String word = list.get(index);
-        String temp="";
+        String temp = "";
         // add spaces in between letter to make it look pretty
-        for(int i=0; i<word.length();i++){
-            temp=temp+word.charAt(i)+" ";
+        for (int i = 0; i < word.length(); i++) {
+            temp = temp + word.charAt(i) + " ";
         }
         return temp;
     }
@@ -196,48 +197,42 @@ public class HangmanFragment extends Fragment {
     public void fillWordList(){
 
         mWordList = new ArrayList<String>();
-        Scanner listScanner;
+
 
 
         //Filling mWordList
-        if(isExternalStorageReadable()){
-            File path = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        if(isExternalStorageReadable()) {
+            File path = Environment.getExternalStorageDirectory();
             File file = new File(path, "wordlist.dat");
 
             try {
-                path.mkdirs();
-                if(file.canRead()){
+                if (file.exists()) {
                     listScanner = new Scanner(file);
                     try {
                         while (listScanner.hasNext()) {
                             mWordList.add(listScanner.next());
                         }
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         Log.e(LOG_TAG, e.getMessage());
+                        useDefaultWordlist();
                     } finally {
                         listScanner.close();
                     }
 
+                } else {
+                    useDefaultWordlist();
                 }
 
-            }catch (Exception e){
-                Log.e(LOG_TAG,e.getMessage());
-            }
-        }else{
-            listScanner = new Scanner(getResources().openRawResource(R.raw.wordlist));
-
-
-            try {
-                while (listScanner.hasNext()) {
-                    mWordList.add(listScanner.next());
-                }
-            } catch (Exception e){
+            } catch (Exception e) {
                 Log.e(LOG_TAG, e.getMessage());
-            } finally {
-                listScanner.close();
+                useDefaultWordlist();
             }
         }
 
+        //Handles if file was empty.
+        if(mWordList.isEmpty()){
+            useDefaultWordlist();
+        }
 
     }
 
@@ -248,6 +243,21 @@ public class HangmanFragment extends Fragment {
             return true;
         }
         return false;
+    }
+
+    public void useDefaultWordlist(){
+        listScanner = new Scanner(getResources().openRawResource(R.raw.wordlist));
+
+
+        try {
+            while (listScanner.hasNext()) {
+                mWordList.add(listScanner.next());
+            }
+        } catch (Exception e){
+            Log.e(LOG_TAG, e.getMessage());
+        } finally {
+            listScanner.close();
+        }
     }
 
 }
