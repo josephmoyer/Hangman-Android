@@ -8,5 +8,6 @@
     <string name="empty_error">You forgot a letter.</string>
     <string name="game_over">Game Over</string>
     <string name="game_win">You Wins!</string>
+    <string name="gallows_description">A gallows for showing how many tries you have until you lose.</string>
 
 </resources>
