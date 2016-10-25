@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+
+<string name="app_name">Hangman</string>
+<string name="action_settings">Configurações</string>
+<string name="hint">Clique nos espaços para enviar.</string>
+<string name="test_error">Apenas uma letra.</string>
+<string name="empty_error">Você esqueceu uma letra.</string>
+<string name="game_over">Fim de jogo</string>
+<string name="game_win">Você ganhou!</string>
+<string name="gallows_description">A forca mostra quantas tentativas você tem até perder.</string>
+
+<resources>
